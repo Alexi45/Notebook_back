@@ -217,7 +217,7 @@ public class AuthController {
 		}
 		user.setRoles(roles);
 		userservice.save(user);
-		return ResponseEntity.ok(new MessageResponse("Usuario registrado correctamente!"));
+		return new ResponseEntity<Map<String, Object>>(HttpStatus.CREATED);
 	}
 
 	/**

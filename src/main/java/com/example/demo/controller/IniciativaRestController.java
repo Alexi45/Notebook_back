@@ -34,6 +34,40 @@ import com.example.demo.model.Iniciativa;
 import com.example.demo.model.Temas;
 import com.example.demo.services.IIniciativaService;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.Iniciativa;
+import com.example.demo.model.Temas;
+import com.example.demo.services.IIniciativaService;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class IniciativaRestController.
@@ -276,6 +310,9 @@ public class IniciativaRestController {
 			} else {
 				LocalDate localDate = LocalDate.parse(fin, formatter);
 				finBueno = localDate.format(formatterBueno);
+			}
+			if (activa.equals(false)) {
+				activa = null;
 			}
 			iniciativa = iniciativaService.findByTituloIniciativaAndDescripcionAndInicioAndFinAndActiva(tituloIniciativa, descripcion,
 					inicioBueno, finBueno, activa);
